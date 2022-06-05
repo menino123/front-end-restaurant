@@ -1,0 +1,150 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-item>
+    <ion-title>R E S U M E N&nbsp;&nbsp;D E&nbsp;&nbsp;D E L I V E R Y</ion-title>
+  </ion-item>
+    <ion-card no-margin>
+        <ion-grid>
+          <ion-row>
+            <ion-col class ="res1">
+              <ion-card-subtitle>N° PEDIDO:</ion-card-subtitle>
+              <ion-card-subtitle>FECHA DE INICIO:</ion-card-subtitle>
+              <ion-card-subtitle>FECHA DE CIERRE:</ion-card-subtitle>
+              <ion-card-subtitle>TOTAL PAGADO:</ion-card-subtitle>
+            </ion-col>
+            <ion-col>
+              <ion-card-subtitle>{{resDelivery.cod_pedido}}</ion-card-subtitle>
+              <ion-card-subtitle>{{getFechaOrdenada(resDelivery.fecha_inicio)}}</ion-card-subtitle>
+              <ion-card-subtitle>{{(resDelivery.fecha_fin === null ? '-' : getFechaOrdenada(resDelivery.fecha_fin))}}</ion-card-subtitle>
+              <ion-card-subtitle>{{resDelivery.pedido.subtotal}}</ion-card-subtitle>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+  </ion-card>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+<ion-button color="success" expand="block" >Imprimir Comanda</ion-button>
+
+<ion-card>
+  <ion-card-header>
+    R e s u m e n&nbsp;&nbsp;d e&nbsp;&nbsp;p e d i d o
+    <ion-segment (click)="cambio($event)" value="1">
+      <ion-segment-button value="1">Listos</ion-segment-button>
+      <ion-segment-button value="2">En preparación</ion-segment-button>
+      <ion-segment-button value="3">Cancelados</ion-segment-button>
+    </ion-segment>
+  </ion-card-header>
+  <ion-grid>
+    <ion-row>
+      <ion-item>
+      <ion-col class="ped_cons2">
+
+          <ion-label>Consumible</ion-label>
+
+      </ion-col>
+      <ion-col class="ped_cant">
+
+          <ion-label>*</ion-label>
+
+      </ion-col>
+      <ion-col class="ped_tu">
+
+          <ion-label>T. Unit</ion-label>
+
+      </ion-col>
+      <ion-col class="ped_t">
+
+          <ion-label>P. Total</ion-label>
+
+      </ion-col>
+    </ion-item>
+    </ion-row>
+  </ion-grid>
+    <div *ngIf="valueSelected === '1'">
+    <ion-grid *ngFor='let res of getEstado("Listo"); index as i'>
+      <ion-row>
+        <ion-col class="ped_cons2">
+          <ion-item >
+            <ion-label><abbr title={{res.nombre}}>{{res.nombre}}</abbr></ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col class="ped_cant">
+          <ion-item>
+            <ion-label>x{{res.cantidad}}</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col class="ped_tu">
+          <ion-item>
+            <ion-label>{{res.precio_unitario}}</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col class="ped_t">
+          <ion-item>
+            <ion-label>{{res.precio_total}}</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div *ngIf="valueSelected === '2'">
+    <ion-grid *ngFor='let res of getEstado("En preparación"); index as i'>
+      <ion-row>
+      <ion-item>
+        <ion-col class="ped_cons2">
+
+            <ion-label><abbr title={{res.nombre}}>{{res.nombre}}</abbr></ion-label>
+
+        </ion-col>
+        <ion-col class="ped_cant">
+
+            <ion-label>x{{res.cantidad}}</ion-label>
+
+        </ion-col>
+        <ion-col class="ped_tu">
+
+            <ion-label>{{res.precio_unitario}}</ion-label>
+
+        </ion-col>
+        <ion-col class="ped_t">
+
+            <ion-label>{{res.precio_total}}</ion-label>
+
+        </ion-col>
+      </ion-item>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div *ngIf="valueSelected === '3'">
+    <ion-grid *ngFor='let res of getEstado("Cancelado"); index as i'>
+      <ion-row>
+      <ion-item>
+        <ion-col class="ped_cons2">
+
+            <ion-label><abbr title={{res.nombre}}>{{res.nombre}}</abbr></ion-label>
+
+        </ion-col>
+        <ion-col class="ped_cant">
+
+            <ion-label>x{{res.cantidad}}</ion-label>
+
+        </ion-col>
+        <ion-col class="ped_tu">
+
+            <ion-label>{{res.precio_unitario}}</ion-label>
+
+        </ion-col>
+        <ion-col class="ped_t">
+
+            <ion-label>{{res.precio_total}}</ion-label>
+
+        </ion-col>
+      </ion-item>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-card>
+
+</ion-content>

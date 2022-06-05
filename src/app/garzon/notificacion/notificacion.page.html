@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>N O T I F I C A C I O N E S</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment (click)="cambio($event)" value="1">
+      <ion-segment-button value="1">Nuevas</ion-segment-button>
+      <ion-segment-button value="2">Historial</ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card  *ngIf="valueSelected === '1'">
+      <ion-grid>
+        <ion-row *ngFor="let notif of filter_notif(notificacion, true); index as i" >
+          <ion-col>
+            <ion-item-sliding>
+              <ion-item>
+                <ion-label > Mesa {{notif.cod_mesa}}, x{{notif.cantidad}} {{notif.nombre}} {{notif.estado}}</ion-label>
+              </ion-item>
+              <ion-item-options side="end">
+                <ion-item-option color = "success" (click)='cambiaEstado(notif.id_notificacion)'>Aceptar</ion-item-option>
+              </ion-item-options>
+              </ion-item-sliding>
+
+          </ion-col>
+
+        </ion-row>
+
+      </ion-grid>
+
+  </ion-card>
+
+  <ion-card  *ngIf="valueSelected === '2'">
+      <ion-grid>
+        <ion-row *ngFor="let notif of filter_notif(notificacion, false); index as i" >
+          <ion-col>
+              <ion-item>
+                <ion-label > Mesa {{notif.cod_mesa}}, x{{notif.cantidad}} {{notif.nombre}} {{notif.estado}}</ion-label>
+              </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+  </ion-card>
+
+</ion-content>

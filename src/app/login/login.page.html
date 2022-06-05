@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Cosito de Log In</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div  style="height: 100%; display: flex; align-items: center; justify-content: center;">
+    <ion-card position="center">
+
+      <form [formGroup] = "loginForm">
+
+
+          <ion-item>
+            <ion-label position="floating">Rut: </ion-label>
+            <ion-input maxlength="8" formControlName="rutlg" placeholder="Sin puntos ni guión ni digito verificador"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Contraseña: </ion-label>
+            <ion-input type="password" formControlName="passlg"></ion-input>
+          </ion-item>
+
+      </form>
+
+      <ion-button color="success" extend="full"(click)="ingresar()">Ingresar</ion-button>
+
+    </ion-card>
+  </div>
+</ion-content>

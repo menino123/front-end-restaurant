@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>G E S T I Ó N&nbsp;&nbsp;D E&nbsp;&nbsp;M E S A S&nbsp;&nbsp;Y&nbsp;&nbsp;C A J A</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]='formMesa'>
+    <ion-card>
+      <ion-card-header>
+        A g r e g a r&nbsp;&nbsp;M e s a
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-item>
+          <ion-label>Seleccione mesa</ion-label>
+          <ion-select interface="popover" formControlName='nMesaA'>
+            <ion-select-option *ngFor="let number of arrayMesas" disabled={{number.disabled}} value={{number.cod}}>{{number.cod}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-card-content>
+      <ion-button color='success' (click)='agregaMesa()'>Agregar Mesa</ion-button>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        E l i m i n a r&nbsp;&nbsp;M e s a
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label>Seleccione mesa</ion-label>
+          <ion-select interface="popover" formControlName='nMesaE'>
+            <!-- disabled='{{mesa.estado === "ocupada"}}'-->
+            <ion-select-option  *ngFor='let mesa of mesas' value="{{mesa.cod_mesa}}"
+            disabled='{{mesa.estado === "ocupada"}}'>{{mesa.cod_mesa}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-card-content>
+      <ion-button color='danger' (click)='eliminaMesa()'>Eliminar Mesa</ion-button>
+    </ion-card>
+  </form>
+  <br><br><br>
+  <ion-card>
+    <ion-button disabled='{{caja}}' color ="success"expand="block" (click)="abrirCaja()">Abrir Caja</ion-button>
+  </ion-card>
+  <ion-card>
+    <ion-button disabled='{{!caja}}' expand="block" (click)="cerrarCaja()">Cerrar Caja</ion-button>
+  </ion-card>
+</ion-content>

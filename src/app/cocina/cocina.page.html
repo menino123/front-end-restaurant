@@ -1,0 +1,175 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>M A E S T R O&nbsp;&nbsp;D E&nbsp;&nbsp;C O C I N A</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment (click)="cambio($event)" value="1">
+      <ion-segment-button value="1">En preparación</ion-segment-button>
+      <ion-segment-button value="2">Listos</ion-segment-button>
+      <ion-segment-button value="3">Cancelados</ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+<ion-card no-margin class="detalle_busqueda">
+  <ion-grid>
+    <ion-row>
+      <ion-item>
+      <ion-col class="pedido_cocina">
+
+          <ion-label>N°</ion-label>
+
+      </ion-col>
+      <ion-col class="fecha_cocina">
+
+          <ion-label>{{(valueSelected === '1' ? 'Llegada': 'Termino')}}</ion-label>
+
+      </ion-col>
+      <ion-col class="plato_cocina">
+
+          <ion-label>Plato</ion-label>
+
+      </ion-col>
+      <ion-col class="dp_cocina">
+
+          <ion-label>D. Preparación</ion-label>
+
+      </ion-col>
+      <ion-col class="estado_cocina">
+
+          <ion-label>Tipo</ion-label>
+
+      </ion-col>
+      <ion-col class="accion_cocina">
+
+          <ion-label>Acciones</ion-label>
+
+      </ion-col>
+    </ion-item>
+    </ion-row>
+  </ion-grid>
+</ion-card>
+<ion-content>
+  <ion-card  *ngIf="valueSelected === '1'" no-margin class="detalle_busqueda">
+    <ion-grid *ngFor='let plato of filter_estado("En preparación"); index as i'>
+      <ion-row>
+      <ion-item>
+        <ion-col class="pedido_cocina">
+
+            <ion-label>{{plato.cod_pedido}}</ion-label>
+
+        </ion-col>
+        <ion-col class ="fecha_cocina">
+
+            <ion-label>{{getHora(plato.inicio)}}</ion-label>
+
+        </ion-col>
+        <ion-col class ="plato_cocina">
+            <ion-label>x{{plato.cantidad}} {{plato.nombre}}</ion-label>
+        </ion-col>
+        <ion-col class ="dp_cocina">
+            <ion-label>{{plato.detalle}}</ion-label>
+        </ion-col>
+        <ion-col class ="estado_cocina">
+
+            <ion-label>{{getTipo(plato.tipo)}}</ion-label>
+
+        </ion-col>
+        <ion-col class="accion_cocina">
+
+            <ion-button color="success" (click)="modPedido(1, plato.tipo, plato.cod_pedido, plato.id_detalle, plato.estado, plato)"><ion-icon name="checkmark-circle"></ion-icon></ion-button>
+            &nbsp;&nbsp;
+            <ion-button color="danger" (click)="modPedido(2, plato.tipo, plato.cod_pedido, plato.id_detalle, plato.estado, plato)"><ion-icon name="close-circle"></ion-icon></ion-button>
+
+        </ion-col>
+      </ion-item>
+      </ion-row>
+    </ion-grid>
+</ion-card>
+<ion-card *ngIf="valueSelected === '2'" no-margin class="detalle_busqueda">
+  <ion-grid *ngFor='let plato of filter_estado("Listo"); index as i'>
+    <ion-row>
+    <ion-item>
+      <ion-col class="pedido_cocina">
+
+          <ion-label>{{plato.cod_pedido}}</ion-label>
+
+      </ion-col>
+      <ion-col class ="fecha_cocina">
+
+          <!--plato.fecha_preparacion-->
+          <ion-label>{{getHora(plato.fin)}}</ion-label>
+
+      </ion-col>
+      <ion-col class ="plato_cocina">
+
+          <ion-label>x{{plato.cantidad}} {{plato.nombre}}</ion-label>
+          <ion-icon></ion-icon>
+
+      </ion-col>
+      <ion-col class ="dp_cocina">
+
+          <ion-label>{{plato.detalle}}</ion-label>
+
+      </ion-col>
+      <ion-col class ="estado_cocina">
+
+          <ion-label>{{getTipo(plato.tipo)}}</ion-label>
+
+      </ion-col>
+      <ion-col class="accion_cocina">
+
+          <ion-button color="medium" disabled (click)="modPedido(1, plato.tipo, plato.cod_pedido, plato.id_detalle, plato.estado, plato)"><ion-icon name="checkmark-circle"></ion-icon></ion-button>
+          <!--disabled='{{res.estado_pedido === "Devuelto"}}'-->
+          &nbsp;&nbsp;
+          <ion-button color="medium" disabled (click)="modPedido(2, plato.tipo, plato.cod_pedido, plato.id_detalle, plato.estado, plato)"><ion-icon name="close-circle"></ion-icon></ion-button>
+
+      </ion-col>
+    </ion-item>
+    </ion-row>
+  </ion-grid>
+</ion-card>
+
+<ion-card *ngIf="valueSelected === '3'" no-margin class="detalle_busqueda">
+  <ion-grid *ngFor='let plato of filter_estado("Cancelado"); index as i'>
+    <ion-row>
+    <ion-item>
+      <ion-col class="pedido_cocina">
+
+          <ion-label>{{plato.cod_pedido}}</ion-label>
+
+      </ion-col>
+      <ion-col class ="fecha_cocina">
+
+          <!--plato.fecha_preparacion-->
+          <ion-label>{{getHora(plato.fin)}}</ion-label>
+
+      </ion-col>
+      <ion-col class ="plato_cocina">
+
+          <ion-label>x{{plato.cantidad}} {{plato.nombre}}</ion-label>
+          <ion-icon></ion-icon>
+
+      </ion-col>
+      <ion-col class ="dp_cocina">
+
+          <ion-label>{{plato.detalle}}</ion-label>
+
+      </ion-col>
+      <ion-col class ="estado_cocina">
+
+          <ion-label>{{getTipo(plato.tipo)}}</ion-label>
+
+      </ion-col>
+      <ion-col class="accion_cocina">
+
+          <ion-button color="medium" disabled (click)="modPedido(1, plato.tipo, plato.cod_pedido, plato.id_detalle, plato.estado, plato)"><ion-icon name="checkmark-circle"></ion-icon></ion-button>
+          &nbsp;&nbsp;
+          <ion-button color="medium" disabled (click)="modPedido(2, plato.tipo, plato.cod_pedido, plato.id_detalle, plato.estado, plato)"><ion-icon name="close-circle"></ion-icon></ion-button>
+
+      </ion-col>
+    </ion-item>
+    </ion-row>
+  </ion-grid>
+</ion-card>
+
+</ion-content>

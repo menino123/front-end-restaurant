@@ -1,0 +1,43 @@
+
+<ion-menu contentId="main" autoHide="true" style="--width: 220px">
+
+  <ion-header>
+    <ion-toolbar>
+      <br>
+      <ion-title>Atención al Cliente</ion-title>
+      <br>
+      <ion-title>{{nombre}} {{apellido}}</ion-title>
+      <br>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-menu-toggle autoHide="false">
+      <ion-item routerLink="/garzon/mesa-garzon" routerDirection="root" routerLinkActive="active-link">
+      <ion-label>Mesas</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+
+    <ion-menu-toggle autoHide="false">
+      <ion-item routerLink="/garzon/notificacion" routerDirection="root" routerLinkActive="active-link">
+      <ion-label>Notificaciones</ion-label><ion-badge color="warning">{{notif_nueva()}}</ion-badge>
+      </ion-item>
+    </ion-menu-toggle>
+
+    <ion-menu-toggle autoHide="false">
+      <ion-item routerLink="/garzon/preparacion" routerDirection="root" routerLinkActive="active-link">
+      <ion-label>Preparaciones</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+
+    <ion-menu-toggle autoHide="false">
+      <ion-item (click)="logOut()" routerDirection="root" routerLinkActive="active-link">
+      <ion-label>Cerrar Sesión</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+
+  </ion-content>
+
+</ion-menu>
+<ion-router-outlet id="main"></ion-router-outlet>
+

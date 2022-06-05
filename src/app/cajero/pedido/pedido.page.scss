@@ -1,0 +1,30 @@
+ion-card{
+  &.pedidos{
+  max-height: 20%;
+  display: flex;
+  flex-direction: column;
+  }
+}
+.ped_d{
+  max-width: auto;
+  text-align: center;
+}
+.ped_d1{
+  max-width: 120px;
+  text-align: center;
+}
+.ped_det{
+  --min-weigth: 300px;
+  --max-height: 300px;
+  --border-radius: 8px;//:)
+}
+
+.info_icon{
+    font-size: 25px;
+}
+
+.content_card{
+  max-width: 850px;
+  display: flex;
+  flex-direction: column;
+}

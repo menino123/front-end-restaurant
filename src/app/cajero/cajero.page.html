@@ -1,0 +1,49 @@
+
+  <ion-menu contentId="main" autoHide="true" >
+
+    <ion-header>
+      <ion-toolbar>
+        <br>
+        <ion-title>C A J A</ion-title>
+        <br>
+        <ion-title>{{nombre}} {{apellido}}</ion-title>
+        <br>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-menu-toggle autoHide="false">
+        <ion-item routerLink="/cajero/mesas" routerDirection="root" routerLinkActive="active-link">
+        <ion-label>Mesas</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+      <ion-menu-toggle autoHide="false">
+        <ion-item routerLink="/cajero/para-llevar" routerDirection="root" routerLinkActive="active-link">
+        <ion-label>Pedido para llevar</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+      <ion-menu-toggle autoHide="false">
+        <ion-item routerLink="/cajero/historialv" routerDirection="root" routerLinkActive="active-link">
+        <ion-label>Historial de Ventas</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+      <ion-menu-toggle autoHide="false">
+        <ion-item routerLink="/cajero/cerrar-abrir" routerDirection="root" routerLinkActive="active-link">
+        <ion-label>Cerrar - Abrir Caja</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+      <ion-menu-toggle autoHide="false">
+        <ion-item (click)="logOut()" routerDirection="root" routerLinkActive="active-link">
+        <ion-label>Cerrar Sesión</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+    </ion-content>
+
+  </ion-menu>
+  <ion-router-outlet id="main"></ion-router-outlet>
+

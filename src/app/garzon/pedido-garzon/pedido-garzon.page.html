@@ -1,0 +1,85 @@
+<ion-content>
+
+  <ion-card>
+    <form [formGroup] = 'pedidoForm'>
+    <ion-card-header>
+      N u e v o&nbsp;&nbsp;p e d i d o
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        Mesa: {{cod_mesa}}<br>
+        Garzón: {{garzon}}
+      </ion-item>
+      <ion-item>
+        <ion-label>Tipo (*):</ion-label>
+        <ion-select style="max-width: 100%;"  interface="popover" formControlName='formTipo' (ionChange)='getConsumible()'>
+          <ion-select-option *ngFor='let c of carta; index as i' value="{{i}}">{{c.tipo}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Consumible (*):</ion-label>
+        <ion-select   style="max-width: 100%;"  interface="popover" formControlName='formCons'>
+
+          <ion-select-option *ngFor='let cons of consumible' value="{{cons.id}},{{cons.nombre}},{{cons.precio}}">{{cons.nombre}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Cantidad (*):</ion-label>
+        <!--inputmode='numeric' min="1" max="99"-->
+        <ion-input type="text" inputmode="numeric" formControlName='formCant' (ionChange)="control()" id="modCant"></ion-input>
+      </ion-item>
+
+      <ion-item>
+
+        <ion-input id="detP" placeholder="Detalle de preparación" formControlName='formDet' va></ion-input>
+      </ion-item>
+
+    </ion-card-content>
+    <ion-button color='danger' expand="block" (click)='(agregar())'>Agregar</ion-button>
+  </form>
+  </ion-card >
+
+  <ion-card>
+    <ion-card-header>
+      R e s u m e n&nbsp;&nbsp;d e&nbsp;&nbsp;p e d i d o
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row *ngFor='let res of res_ped; index as i'>
+          <ion-col>
+
+            <ion-item-sliding>
+              <ion-item>
+                <ion-label>x{{res.cantidad}} {{res.nombre}}</ion-label><ion-icon class ="info_icon" id="{{'open-modal'+i}}" name="information-circle"></ion-icon>
+              </ion-item>
+
+              <ion-item-options side="end">
+                <ion-item-option color = "warning" (click)='eliminaDetalle(i)'>Eliminar</ion-item-option>
+              </ion-item-options>
+            </ion-item-sliding>
+
+          </ion-col>
+          <!--side ="{{(i > 2 ? 'left' : 'start')}}"-->
+          <ion-popover reference="event" alignment="start" arrow="false" side ="{{(i > 2 ? 'end' : 'start')}}" trigger="{{'open-modal'+i}}" class="ped_det">
+            <ng-template>
+              <ion-card>
+                <ion-card-header>
+                  <ion-card-title>{{resumen.resumen[i].nombre}}</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                  <ion-item *ngIf="resumen.resumen[i].detalle !== ''">Preparación: {{(resumen.resumen[i].detalle ? resumen.resumen[i].detalle: '')}}</ion-item>
+                  <ion-item>Cantidad: {{resumen.resumen[i].cantidad}}</ion-item>
+                  <ion-item>P. Unitario: ${{resumen.resumen[i].precio_u}}</ion-item>
+                  <ion-item>P. Total: ${{resumen.resumen[i].precio_t}}</ion-item>
+                </ion-card-content>
+              </ion-card>
+            </ng-template>
+          </ion-popover>
+        </ion-row>
+      </ion-grid>
+      <ion-card-title>Precio total: {{(pTotal? '$'+pTotal : '')}}</ion-card-title><br>
+      <ion-button expand="block" color="success" (click)='realizaPedido()'>Confirmar pedido</ion-button>
+
+    </ion-card-content>
+  </ion-card>
+</ion-content>

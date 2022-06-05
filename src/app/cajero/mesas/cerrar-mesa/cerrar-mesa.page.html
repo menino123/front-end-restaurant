@@ -1,0 +1,147 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>C E R R A R&nbsp;&nbsp;M E S A</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+
+    <ion-card-header>
+      <ion-card>
+        <ion-grid>
+          <ion-row>
+            <ion-card-subtitle> Resumen de la venta: </ion-card-subtitle>
+          </ion-row>
+
+          <ion-row *ngIf="desde === '1'">
+            <ion-col class ="res1">
+                <ion-card-subtitle>Fecha:</ion-card-subtitle>
+                <ion-card-subtitle>Sub total:</ion-card-subtitle>
+            </ion-col>
+            <ion-col>
+                <ion-card-subtitle>{{today | date: 'dd/MM/yyyy HH:mm' }}</ion-card-subtitle>
+                <ion-card-subtitle>${{subtotalDeli}}</ion-card-subtitle>
+            </ion-col>
+          </ion-row>
+
+          <ion-row *ngIf="desde !== '1'">
+            <ion-col class ="res1">
+              <ion-card-subtitle>N° de Mesa:</ion-card-subtitle>
+              <ion-card-subtitle>N° Temporal:</ion-card-subtitle>
+              <ion-card-subtitle>Gárzon:</ion-card-subtitle>
+              <ion-card-subtitle>Fecha:</ion-card-subtitle>
+              <ion-card-subtitle>Sub total:</ion-card-subtitle>
+              <ion-card-subtitle *ngIf="!this.cerrarForm.value.esColacion">Propina sugerida (10%):</ion-card-subtitle>
+            </ion-col>
+            <ion-col>
+              <ion-card-subtitle>{{pedidosMesa.cod_mesa}}</ion-card-subtitle>
+              <ion-card-subtitle>{{pedidosMesa.cod_pedido}}</ion-card-subtitle>
+              <ion-card-subtitle>{{pedidosMesa.garzon}}</ion-card-subtitle>
+              <ion-card-subtitle>{{ today | date: 'HH:mm dd/MM/yyyy' }}</ion-card-subtitle>
+              <ion-card-subtitle>${{pedidosMesa.pedido.subtotal}}</ion-card-subtitle>
+              <ion-card-subtitle *ngIf="!this.cerrarForm.value.esColacion">${{pedidosMesa.pedido.propina_sugerida}}</ion-card-subtitle>
+            </ion-col>
+          </ion-row>
+
+          <ion-row *ngIf="vip">
+            <ion-card-subtitle> <br>Características de venta especial: </ion-card-subtitle>
+          </ion-row>
+          <ion-row *ngIf="vip && descuento > 0 && !this.cerrarForm.value.pndPagado">
+            <ion-col class ="res1">
+              <ion-card-subtitle>Descuento:</ion-card-subtitle>
+              <ion-card-subtitle>Sub total con descuento:</ion-card-subtitle>
+            </ion-col>
+            <ion-col>
+              <ion-card-subtitle>{{descuento}}%</ion-card-subtitle>
+              <ion-card-subtitle>${{newSubT}}</ion-card-subtitle>
+            </ion-col>
+          </ion-row>
+
+          <ion-row *ngIf="vip && this.cerrarForm.value.pndPagado">
+            <ion-card-subtitle>*** Venta pendiente ***</ion-card-subtitle>
+          </ion-row>
+
+          <ion-row *ngIf="desde !== '1' && !this.cerrarForm.value.esColacion">
+            <ion-col class ="res1">
+              <ion-card-subtitle>Total sugerido:</ion-card-subtitle>
+            </ion-col>
+
+            <ion-col>
+              <ion-card-subtitle>${{newT}}</ion-card-subtitle>
+            </ion-col>
+          </ion-row>
+
+        </ion-grid>
+      </ion-card>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form [formGroup] = "cerrarForm">
+        <ion-card>
+          <ion-item>
+            <ion-checkbox id="Vip" color="danger" slot="start" formControlName="esVip" (ionChange)="esVip()" checked="false"></ion-checkbox>
+            <ion-label>Venta Especial</ion-label>
+          </ion-item>
+
+          <ion-item *ngIf="cerrarForm.value.esVip && !this.cerrarForm.value.pndPagado">
+            <ion-checkbox id="Colacion" color="danger" slot="start" formControlName="esColacion" (click)="esColacion()" checked="false"></ion-checkbox>
+            <ion-label>Colación de personal</ion-label>
+          </ion-item>
+
+          <ion-item *ngIf="cerrarForm.value.esVip && this.cerrarForm.value.esColacion">
+            <ion-label position="stacked">Nombre del empleado</ion-label>
+            <ion-select style="height:70%;" id="VipNom" interface="popover" formControlName='vipPagado' value=''>
+              <ion-select-option value=''> Seleccionar empleado</ion-select-option>
+              <ion-select-option *ngFor='let empleado of personal' value="{{empleado.nombre}}">{{empleado.nombre}}</ion-select-option>
+              <!-- <ion-select-option  *ngIf="descuento === '100'" value="xD">No aplica.</ion-select-option> -->
+            </ion-select>
+          </ion-item>
+
+          <ion-item *ngIf="cerrarForm.value.esVip && !this.cerrarForm.value.esColacion">
+            <ion-checkbox id="VipPend" color="danger" slot="start" formControlName="pndPagado" [disabled]="!vip"  (ionChange)="esPendPago()" checked="false"></ion-checkbox>
+            <ion-label>Pendiente de pago</ion-label>
+          </ion-item>
+
+          <ion-item *ngIf="cerrarForm.value.esVip && !this.cerrarForm.value.pndPagado && !this.cerrarForm.value.esColacion">
+            <ion-label position="stacked">% Descuento: </ion-label>
+            <ion-select id="VipDsc" interface="popover" formControlName='dscPagado' (ionChange)="modSubT()" [disabled]="!vip" value="0">
+              <ion-select-option  *ngFor="let number of [0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100]" value="{{number}}">{{number}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item *ngIf="cerrarForm.value.esVip && !this.cerrarForm.value.esColacion">
+            <ion-label position="stacked">Nombre del Cliente (*): </ion-label>
+            <ion-input id="VipNom" type="text" formControlName="vipPagado" [disabled]="!vip" ></ion-input>
+          </ion-item>
+        </ion-card>
+
+        <ion-card>
+          <ion-item *ngIf="!this.cerrarForm.value.pndPagado && descuento !== '100' && !this.cerrarForm.value.esColacion">
+            <ion-label position="stacked">Tipo de Pago (*)</ion-label>
+            <ion-select disabled = "{{descuento === 100 && !this.cerrarForm.value.pndPagado}}" id="tipoPago" interface="popover" formControlName='tpPagado'>
+              <ion-select-option  *ngFor='let tPago of metodoPago' value="{{tPago.tipo_pago_id}}">{{tPago.tipo_pago}}</ion-select-option>
+              <!-- <ion-select-option  *ngIf="descuento === '100'" value="xD">No aplica.</ion-select-option> -->
+            </ion-select>
+          </ion-item>
+
+          <ion-item *ngIf="!this.cerrarForm.value.pndPagado && descuento !== '100' && !this.cerrarForm.value.esColacion">
+            <ion-label position="stacked">Sub Total Pagado (*): </ion-label>
+            <ion-input id="sbT" (ionChange)="controlSBT()" type="text" formControlName="sbTPagado"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="desde !== '1' && !this.cerrarForm.value.esColacion">
+            <ion-label position="stacked">Propina: </ion-label>
+            <ion-input id="prp" (ionChange)="controlPROP()" type="text" formControlName="prpPagado"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked"> Observacion: </ion-label>
+            <ion-input type="text" formControlName="obsPagado"></ion-input>
+          </ion-item>
+        </ion-card>
+
+        <ion-button (click)="cerrarPedido()">Finalizar pedido</ion-button>
+      </form>
+
+  </ion-card-content>
+</ion-card>
+</ion-content>

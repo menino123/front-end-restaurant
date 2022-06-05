@@ -1,0 +1,187 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title >{{(this.desde === '1') ? 'P E D I D O S&nbsp;&nbsp;P A R A&nbsp;&nbsp;L L E V A R' : 'P E D I D O&nbsp;&nbsp;E N&nbsp;&nbsp;M E S A'}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card style="margin-left: 210px; margin-right: 210px;">
+    <form [formGroup] = 'pedidoForm'>
+    <ion-card-header>
+      N u e v o&nbsp;&nbsp;p e d i d o
+    </ion-card-header>
+    <ion-card-content>
+
+      <!--<ion-item *ngIf="desde === '1'">
+          <ion-label>Mesa (*):</ion-label>
+        <ion-select interface="popover" (ionChange)="tieneGarzon()" formControlName='formMesa' value={{cod_mesa}}>
+          <ion-select-option  *ngFor='let mesa of mesas'  value="{{mesa.cod_mesa}}">{{mesa.cod_mesa}}</ion-select-option>
+        </ion-select>
+      </ion-item>-->
+
+      <ion-label *ngIf="desde === '2'">
+        <ion-label>
+          <ion-title>Mesa {{cod_mesa}}</ion-title>
+        </ion-label>
+        <ion-item>
+            <ion-label>Garzón (*):</ion-label>
+            <ion-select style="max-width: 100%;" id="garzon" interface="popover" disabled:false formControlName='formGarzon' placeholder="{{gEncargado}}" value="id_gEncargado">
+              <ion-select-option *ngFor='let g of garzones' value={{g.id}}>{{g.nombre}}</ion-select-option>
+            </ion-select>
+        </ion-item>
+
+      </ion-label>
+
+      <ion-label *ngIf="desde === '3'">
+        <ion-label>
+          <ion-title>Mesa {{cod_mesa}}</ion-title>
+        </ion-label>
+        <ion-label>
+          <ion-title>Garzón {{garzon}}</ion-title>
+        </ion-label>
+
+      </ion-label>
+
+
+      <ion-item>
+        <ion-label>Tipo (*):</ion-label>
+        <ion-select style="max-width: 100%;"  interface="popover" formControlName='formTipo' (ionChange)='getConsumible()'>
+          <ion-select-option *ngFor='let c of carta; index as i' value="{{i}}">{{c.tipo}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Consumible (*):</ion-label>
+        <ion-select   style="max-width: 100%;"  interface="popover" formControlName='formCons'>
+
+          <ion-select-option *ngFor='let cons of consumible' value="{{cons.id}},{{cons.nombre}},{{cons.precio}}">{{cons.nombre}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Cantidad (*):</ion-label>
+        <!--inputmode='numeric' min="1" max="99"-->
+        <ion-input type="text" formControlName='formCant' (ionChange)="control()" id="modCant"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Detalles de preparación: </ion-label>
+        <ion-input id="detP" placeholder="Notas para el cocinero" formControlName='formDet' va></ion-input>
+      </ion-item>
+
+    </ion-card-content>
+    <ion-button color='danger' (click)='(desde === "1" ? agregarDelivery() : agregar())'>Agregar</ion-button>
+  </form>
+  </ion-card >
+
+  <ion-card style="margin-left: 210px; margin-right: 210px;">
+    <ion-card-header>
+      R e s u m e n&nbsp;&nbsp;d e&nbsp;&nbsp;p e d i d o
+    </ion-card-header>
+    <ion-card-content style="display: flex; flex-direction: column;">
+      <ion-grid style="margin: auto">
+
+        <ion-row style="justify-content: center;">
+          <ion-item style="width: 100%;  align-items: center;">
+          <ion-col class="ped_cons">
+
+              <ion-label>Consumible</ion-label>
+
+          </ion-col>
+          <ion-col class ="ped_icon">
+
+        </ion-col>
+
+          <ion-col class="ped_cant">
+
+              <ion-label>*</ion-label>
+
+          </ion-col>
+          <ion-col class="ped_tu">
+
+              <ion-label>Total Unit.</ion-label>
+
+          </ion-col>
+
+          <ion-col class="ped_t">
+
+              <ion-label>P. Total</ion-label>
+
+          </ion-col>
+          <ion-col class="accion_pedido">
+
+              <ion-label>Acción</ion-label>
+
+          </ion-col>
+        </ion-item>
+        </ion-row>
+      </ion-grid>
+
+      <ion-grid style="margin: auto width">
+        <ion-row style="justify-content: center;" *ngFor='let res of res_ped; index as i'>
+
+          <ion-item style="width: 100%; align-items: center;">
+
+          <ion-col class="ped_cons">
+
+              <ion-label>
+                <ion-label><abbr title={{res.nombre}}>{{res.nombre}}</abbr>
+                </ion-label>
+
+              </ion-label>
+            </ion-col>
+            <ion-col class ="ped_icon">
+
+              <ion-label>
+                <ion-icon *ngIf="resumen.resumen[i].detalle !== ''" class ="info_icon" id="{{'open-modal'+i}}" name="information-circle"></ion-icon>
+              </ion-label>
+
+            </ion-col>
+
+
+
+
+          <ion-col class="ped_cant">
+
+              <ion-label>{{res.cantidad}}</ion-label>
+
+          </ion-col>
+          <ion-col class="ped_tu">
+
+              <ion-label>${{res.precio_u}}</ion-label>
+
+          </ion-col>
+          <ion-col class="ped_t">
+
+              <ion-label>${{res.precio_t}}</ion-label>
+
+          </ion-col>
+          <ion-col class="accion_pedido">
+
+              <ion-button color="warning" (click)='eliminaDetalle(i)'>Eliminar<br></ion-button>
+
+          </ion-col>
+          <ion-popover *ngIf="resumen.resumen[i].detalle !== ''" arrow="true" side = "end" trigger="{{'open-modal'+i}}" class="ped_det">
+            <ng-template>
+              <ion-item style="align-self: flex-start;">
+                  <ion-title>
+                    {{resumen.resumen[i].detalle}}
+                  </ion-title>
+              </ion-item>
+            </ng-template>
+          </ion-popover>
+        </ion-item>
+        </ion-row>
+
+      </ion-grid>
+
+      <ion-card-title>Precio total: {{(!pTotal? '' : '$'+pTotal)}}</ion-card-title>
+      <ion-button color="success" (click)='(desde === "1" ? pedidoDelivery() : realizaPedido())'>Confirmar pedido</ion-button>
+
+
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

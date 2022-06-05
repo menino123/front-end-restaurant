@@ -1,0 +1,161 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+.modal-result{
+
+  &::part(content){
+    width: 75%;
+    height: 70%;
+  }
+}
+
+.modal-detalle{
+  &::part(content){
+    width: 45%;
+    height: 80%;
+
+  }
+}
+.modal-garzon-detalle{
+  &::part(content){
+    width: 10%;
+    height: 20%;
+
+  }
+}
+
+.modal-busqueda{
+  &::part(content){
+    height: 75%;
+
+  }
+
+}
+
+.modal-cmesa{
+  /*&::part(backdrop){
+    background-color: black;
+  }*/
+  &::part(content){
+    height: 98%;
+
+  }
+}
+.modal-rmesa{
+  /*&::part(backdrop){
+    background-color: black;
+  }*/
+  &::part(content){
+    height: 90%;
+
+  }
+}
+
+.cod_pedido{
+  min-width: 60px;
+  max-width: 60px;
+}
+.cod_pedido2{
+  min-width: 80px;
+  max-width: 80px;
+}
+.n_boleta{
+  min-width: 90px;
+  max-width: 90px;
+}
+.fecha_pedido{
+  max-width: 160px;
+  min-width: 160px;
+}
+.garzon_pedido{
+  max-width: 180px;
+  min-width: 180px;
+}
+.desc_pedido{
+  max-width: 130px;
+  min-width: 130px;
+}
+.tpago_pedido{
+  max-width: 100px;
+  min-width: 100px;
+}
+.subt_pedido{
+  max-width: 110px;
+  min-width: 110px;
+}
+.prop_pedido{
+  max-width: 100px;
+  min-width: 100px;
+}
+.estado_pedido{
+  max-width: 110px;
+  min-width: 110px;
+}
+.accion_pedido{
+  min-width: 130px;
+  max-width: 130px;
+}
+.res1{
+  max-width: 240px;
+}
+//pedido
+.ped_cons{
+  max-width: 300px;
+  min-width: 300px;
+}
+.ped_icon{
+  max-width: 60px;
+  min-width: 60px;
+}
+.ped_cons2{
+  max-width: 280px;
+  min-width: 280px;
+}
+.ped_cant{
+  min-width: 60px;
+  max-width: 60px;
+}
+.ped_tu{
+  min-width: 130px;
+  max-width: 130px;
+}
+.ped_t{
+  min-width: 100px;
+  max-width: 100px;
+}
+.ped_e{
+  min-width: 100px;
+  max-width: 100px;
+}
+.detalle_busqueda{
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.x-icon{
+  font-size: 25px;
+}
+

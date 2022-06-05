@@ -1,0 +1,7 @@
+{
+  "name": "frontkim",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

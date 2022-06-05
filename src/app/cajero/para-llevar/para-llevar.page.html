@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>P E D I D O S&nbsp;&nbsp;P A R A&nbsp;&nbsp;L L E V A R</ion-title>
+    <ion-button disabled='{{!caja}}' color="warning" expand="block" (click)='agregarPedido()'>Realizar Nuevo Pedido</ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-grid>
+  <ion-row size="3">
+    <ion-col size="3" *ngFor='let deli of delivery'>
+      <!--class='{{getEstado(deli.cod_pedido) === "En preparación" ? "enPreparacion" : "listo"}}'-->
+      <ion-card disabled='{{!caja}}'  class='{{getEstado(deli.pedido.count) === "En preparación" ? "enPreparacion" : "listo"}}' (click)="detalleDelivery(deli.cod_pedido)">
+
+        <ion-card-header>
+          <ion-card-title>N° Pedido: {{deli.cod_pedido}}</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-grid>
+            <ion-row>
+              Llegada: {{getHora(deli.fecha_inicio)}}
+            </ion-row>
+            <ion-row>
+              Total: {{(deli.pedido.subtotal === undefined ? '$0' : '$'+deli.pedido.subtotal)}}
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-icon class="x-icon" name="close-sharp"></ion-icon>:{{deli.pedido.count.cancelado}}
+              </ion-col>
+              <ion-col>
+                <ion-icon class="x-icon" name="time-outline"></ion-icon>:{{deli.pedido.count.preparacion}}
+              </ion-col>
+              <ion-col>
+                <ion-icon class="x-icon" name="checkmark-sharp"></ion-icon>:{{deli.pedido.count.listo}}
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+</ion-content>

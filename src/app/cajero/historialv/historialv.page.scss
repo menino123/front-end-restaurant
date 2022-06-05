@@ -1,0 +1,15 @@
+.selected{
+  color: rgb(245, 215, 47);
+  font-size: 2.2em
+  }
+
+.no-selected{
+  color: black;
+  font-size: 1.8em
+}
+.example-viewport {
+  display: flex;
+  height: 350px;
+  width: 100%;
+  border: 0.1px;
+}

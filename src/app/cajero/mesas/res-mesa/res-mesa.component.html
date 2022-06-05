@@ -1,0 +1,159 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-item>
+    <ion-title>R E S U M E N&nbsp;&nbsp;D E&nbsp;&nbsp;M E S A</ion-title>
+  </ion-item>
+    <ion-card no-margin>
+        <ion-grid>
+          <ion-row>
+            <ion-col class ="res1">
+              <ion-card-subtitle>MESA:</ion-card-subtitle>
+              <ion-card-subtitle>N° PEDIDO:</ion-card-subtitle>
+              <ion-card-subtitle>GARZÓN:</ion-card-subtitle>
+              <ion-card-subtitle>SUB TOTAL:</ion-card-subtitle>
+              <ion-card-subtitle>PROPINA SUGERIDA:</ion-card-subtitle>
+              <ion-card-subtitle>TOTAL A PAGAR:</ion-card-subtitle>
+            </ion-col>
+            <ion-col>
+              <ion-card-subtitle>{{pedidosMesa.cod_mesa}}</ion-card-subtitle>
+              <ion-card-subtitle>{{pedidosMesa.cod_pedido}}</ion-card-subtitle>
+              <ion-card-subtitle>{{pedidosMesa.garzon}}</ion-card-subtitle>
+              <ion-card-subtitle>${{pedidosMesa.pedido.subtotal}}</ion-card-subtitle>
+              <ion-card-subtitle>${{pedidosMesa.pedido.propina_sugerida}}</ion-card-subtitle>
+              <ion-card-subtitle>${{pedidosMesa.pedido.total}}</ion-card-subtitle>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+  </ion-card>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<div style="display: flex; justify-content: center;">
+  <ion-button start (click)="agregaPedido()">Agregar Pedido</ion-button>
+  <ion-button color="success" >Imprimir Comanda</ion-button>
+  <ion-button end color="danger" (click)="modalCerrarMesa()">Finalizar Pedido</ion-button>
+</div>
+
+<ion-card no-margin>
+  <ion-card-header>
+    R e s u m e n&nbsp;&nbsp;d e&nbsp;&nbsp;p e d i d o
+    <ion-segment (click)="cambio($event)" value="1">
+      <ion-segment-button value="1">Listos</ion-segment-button>
+      <ion-segment-button value="2">En preparación</ion-segment-button>
+      <ion-segment-button value="3">Cancelados</ion-segment-button>
+    </ion-segment>
+  </ion-card-header>
+    <ion-grid>
+      <ion-row>
+        <ion-item style="margin:auto;">
+        <ion-col class="ped_cons2">
+
+            <ion-label>Consumible</ion-label>
+
+        </ion-col>
+        <ion-col class="ped_cant">
+
+            <ion-label>*</ion-label>
+
+        </ion-col>
+        <ion-col class="ped_tu">
+
+            <ion-label>T. Unit</ion-label>
+
+        </ion-col>
+        <ion-col class="ped_t">
+
+            <ion-label>P. Total</ion-label>
+
+        </ion-col>
+      </ion-item>
+      </ion-row>
+    </ion-grid>
+    <div *ngIf="valueSelected === '1'">
+    <ion-grid *ngFor='let res of getEstado("Listo"); index as i'>
+      <ion-row>
+      <ion-item style="margin:auto;">
+        <ion-col class="ped_cons2">
+
+            <ion-label><abbr title={{res.nombre}}>{{res.nombre}}</abbr></ion-label>
+
+        </ion-col>
+        <ion-col class="ped_cant">
+
+            <ion-label>x{{res.cantidad}}</ion-label>
+
+        </ion-col>
+        <ion-col class="ped_tu">
+
+            <ion-label>${{res.precio_unitario}}</ion-label>
+
+        </ion-col>
+        <ion-col class="ped_t">
+
+            <ion-label>${{res.precio_total}}</ion-label>
+
+        </ion-col>
+      </ion-item>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div *ngIf="valueSelected === '2'">
+    <ion-grid *ngFor='let res of getEstado("En preparación"); index as i'>
+      <ion-row >
+      <ion-item style="margin:auto;">
+        <ion-col class="ped_cons2">
+
+            <ion-label><abbr title={{res.nombre}}>{{res.nombre}}</abbr></ion-label>
+
+        </ion-col>
+        <ion-col class="ped_cant">
+
+            <ion-label>x{{res.cantidad}}</ion-label>
+
+        </ion-col>
+        <ion-col class="ped_tu">
+
+            <ion-label>${{res.precio_unitario}}</ion-label>
+
+        </ion-col>
+        <ion-col class="ped_t">
+
+            <ion-label>${{res.precio_total}}</ion-label>
+
+        </ion-col>
+      </ion-item>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div *ngIf="valueSelected === '3'">
+    <ion-grid *ngFor='let res of getEstado("Cancelado"); index as i'>
+      <ion-row >
+      <ion-item style="margin:auto;">
+        <ion-col class="ped_cons2">
+
+            <ion-label><abbr title={{res.nombre}}>{{res.nombre}}</abbr></ion-label>
+
+        </ion-col>
+        <ion-col class="ped_cant">
+
+            <ion-label>x{{res.cantidad}}</ion-label>
+
+        </ion-col>
+        <ion-col class="ped_tu">
+
+            <ion-label>${{res.precio_unitario}}</ion-label>
+
+        </ion-col>
+        <ion-col class="ped_t">
+
+            <ion-label>${{res.precio_total}}</ion-label>
+
+        </ion-col>
+      </ion-item>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-card>
+
+</ion-content>

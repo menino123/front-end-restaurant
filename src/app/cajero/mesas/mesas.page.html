@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title >M E S A S</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content >
+  <ion-grid>
+    <ion-row size="3">
+      <ion-col size="3" *ngFor='let mesa of mesas'>
+        <!--[ngClass]="{color: mesa.estado ==='ocupada'}? 'ocupada' : 'disponible'"-->
+        <ion-card disabled='{{!caja}}' class='{{mesa.estado ==="ocupada" ? "ocupada" : "disponible"}}' (click)='(mesa.estado !== "disponible" ? detalleMesa(mesa.cod_mesa) : agregarPedido(mesa.cod_mesa)  )'>
+
+          <ion-card-header>
+            <ion-card-title>Mesa: {{mesa.cod_mesa}}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-grid>
+              <ion-row>
+                N° Pedido: {{mesa.cod_pedido}}
+              </ion-row>
+              <ion-row>
+                Llegada: {{(mesa.cod_pedido === "Sin pedido" ? ' ' : getFecha(mesa.cod_mesa))}}
+              </ion-row>
+              <ion-row>
+                Garzón: {{mesa.garzon}}
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-icon class="x-icon" name="close-sharp"></ion-icon>:{{(mesa.cod_pedido === "Sin pedido" ? ' ' : mesa.pedido.count.cancelado)}}
+                </ion-col>
+                <ion-col>
+                  <ion-icon class="x-icon" name="checkmark-sharp"></ion-icon>:{{(mesa.cod_pedido === "Sin pedido" ? ' ' : mesa.pedido.count.listo)}}
+                </ion-col>
+                <ion-col>
+                  <ion-icon class="x-icon" name="time-outline"></ion-icon>:{{(mesa.cod_pedido === "Sin pedido" ? ' ' : mesa.pedido.count.preparacion)}}
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
